@@ -4,6 +4,7 @@ from models import *
 from django.shortcuts import render, redirect, HttpResponse
 import bcrypt
 from django.contrib import messages
+import datetime
 
 # Create your views here.
 def login_reg(request):
