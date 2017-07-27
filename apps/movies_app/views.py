@@ -60,7 +60,7 @@ def find_users(request):
 def movie(request, movie_id):
     context = {
     'current': User.objects.get(id = request.session['user_id']).zipCode,
-    'movie_id': movie_id
+    'movie_id': str(movie_id)
     }
     print context['current']
     return render(request, 'movies_app/movie.html', context)
