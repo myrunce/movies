@@ -57,3 +57,5 @@ def find_users(request):
     print users
     return HttpResponse(users.name)
 
+def movie(request, movie_id):
+    return render(request, 'movies_app/movie.html', {'movie_id': movie_id})
