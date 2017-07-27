@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from models import *
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 import bcrypt
 from django.contrib import messages
 
@@ -44,4 +44,16 @@ def login(request):
 
 def welcome(request):
     return render(request, 'movies_app/welcome.html')
-    
+
+# def watch(request):
+#     the_user = movie.objects.get(id = request.session.id)
+#     user_watching = Movie.objects.create(movie = name of movie, users = the_user)
+#     return redirect('/')
+
+def find_users(request):
+    users = User.objects.filter(name__startswith = request.POST['find_name'])
+    if users.count() < 2:
+        users = User.objects.get(name__startswith = request.POST['find_name'])
+    print users
+    return HttpResponse(users.name)
+

@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^process$', views.process),
     url(r'^login$', views.login),
     url(r'^welcome$', views.welcome),
+    url(r'^welcome/find_users$', views.find_users),
 ]

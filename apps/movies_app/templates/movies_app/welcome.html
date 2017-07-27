@@ -5,12 +5,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
-        <script>
+        <!-- <script>
           var api_key = 'sszbbjhadk82fc9nh469bs2k';
           var baseUrl = "http://data.tmsapi.com/v1.1";
           var showtimesUrl = baseUrl + '/movies/showings';
           var zipCode = "95128";  //should be the zip of currently lgged in user
-          var d = new Date();  //i need this to be in a session storing the data from the date feild
+          var d = new Date();  //i need this to be in a session storing the data from the date field
           var today = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
           $(document).ready(function(){
             $.ajax({
@@ -34,9 +34,9 @@
                 //MYRON LOOK AT THIS
               })
             }
-          </script>
+        </script> -->
 
-          <script>
+        <script>
             $(document).ready(function(){
               $('.pop').append('');
               $('.other_movies').hide();
@@ -48,10 +48,42 @@
                   $('.dates').show();
               })
             })
-          </script>
+        </script>
+
+        <script>
+            $(document).ready(function(){
+                $('.ajax_form').submit(function(e){
+                    e.preventDefault()
+                })
+                $('#ajax_find_users').keyup(function(){
+                    console.log('Sending Ajax request to /welcome/find_users')
+                    console.log('Submitting the following data', $(this).parent().serialize())
+                    $.ajax({
+                        url: '/welcome/find_users', /* Where should this go? */
+                        method: 'post', /* Which HTTP verb? */
+                        data: $(this).parent().serialize(), /* Any data to send along? */
+                        success: function(serverResponse) { /* What code should we run when the server responds? */
+                        $('.found_users').html(serverResponse)
+                        }
+                    })
+                });
+            })
+        </script>
+    
+
+
     </head>
     <body>
         <h1>welcome {{ request.session.user_name }}</h1>
+        <div class="date">
+          <button class="movies_date" type="button" name="button">date</button>
+          <!-- <p id=dates>moives on that day (number of people goind)</p> -->
+          <form class="" action="index.html" method="post">
+            {% csrf_token %}
+            <input class=dates type="date" name="date" value="">
+            <input class=dates type="submit" name="" value="">
+          </form>
+        </div>
         <div class="movie">
           <h2>Select a movie</h2>
           <div class="pop">
@@ -63,22 +95,14 @@
             <button type="button" name="button"><a href="#">select</a></button>
           </div>
         </div>
-        <div class="date">
-          <button class="movies_date" type="button" name="button">date</button>
-          <!-- <p id=dates>moives on that day (number of people goind)</p> -->
-          <form class="" action="index.html" method="post">
-            {% csrf_token %}
-            <input class=dates type="date" name="date" value="">
-            <input class=dates type="submit" name="" value="">
-          </form>
-        </div>
         <div class="user">
-          <form class="" action="index.html" method="post">
+          <form class="ajax_form" action="/welcome/find_users" method="post">
             {% csrf_token %}
-            <input type="text" name="" value="">
-            <input type="submit" name="" value="">
+            Find Users by name: <input type="text" name="find_name" id="ajax_find_users">
           </form>
-          <p>list of usernames that match that name</p>
+            <p>list of usernames that match that name</p>
+            <div class="found_users">
+            </div>
         </div>
     </body>
 </html>
