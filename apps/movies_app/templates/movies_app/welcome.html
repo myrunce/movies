@@ -5,11 +5,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
-        <!-- <script>
+        <script>
           var api_key = 'sszbbjhadk82fc9nh469bs2k';
           var baseUrl = "http://data.tmsapi.com/v1.1";
           var showtimesUrl = baseUrl + '/movies/showings';
-          var zipCode = "95128";  //should be the zip of currently lgged in user
+          var zipCode = {{zipCode}};  //should be the zip of currently lgged in user
           var d = new Date();  //i need this to be in a session storing the data from the date field
           var today = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
           $(document).ready(function(){
@@ -34,7 +34,7 @@
                 //MYRON LOOK AT THIS
               })
             }
-        </script> -->
+        </script>
 
         <script>
             $(document).ready(function(){
@@ -69,7 +69,7 @@
                 });
             })
         </script>
-    
+
 
 
     </head>

@@ -23,7 +23,7 @@ def process(request):
         else:
             passwordDB = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt())
             created_user = User.objects.create(name = request.POST['name'], username = request.POST['username'] , email = request.POST['email'], password = passwordDB, birthday = request.POST['birth'], zipCode = request.POST['zipCode'])
-            request.session['user_id'] = created_user.id 
+            request.session['user_id'] = created_user.id
             request.session['user_name'] = created_user.name
             return redirect('/welcome')
 
@@ -32,9 +32,9 @@ def login(request):
     if found_users.count() > 0:
         found_user = found_users.first()
         if bcrypt.checkpw(request.POST['password'].encode(), found_user.password.encode()) == True:
-            request.session['user_id'] = found_user.id 
+            request.session['user_id'] = found_user.id
             request.session['user_name'] = found_user.name
-            return redirect('/welcome') 
+            return redirect('/welcome')
         else:
             messages.error(request, 'Login Failed', extra_tags='fail')
             return redirect('/')
@@ -58,4 +58,9 @@ def find_users(request):
     return HttpResponse(users.name)
 
 def movie(request, movie_id):
-    return render(request, 'movies_app/movie.html', {'movie_id': movie_id})
+    context = {
+    'current': User.objects.get(id = request.session['user_id']).zipCode,
+    'movie_id': str(movie_id)
+    }
+    print context['current']
+    return render(request, 'movies_app/movie.html', context)
