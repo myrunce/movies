@@ -43,7 +43,7 @@ def login(request):
         return redirect('/')
 
 def welcome(request):
-    return render(request, 'movies_app/welcome.html')
+    return render(request, 'movies_app/welcome.html', {'current': User.objects.get(id = request.session['user_id']).zipCode})
 
 # def watch(request):
 #     the_user = movie.objects.get(id = request.session.id)
