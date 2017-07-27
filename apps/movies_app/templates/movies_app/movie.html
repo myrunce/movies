@@ -7,7 +7,7 @@
     <script>
       var api_key = 'sszbbjhadk82fc9nh469bs2k';
       var baseUrl = "http://data.tmsapi.com/v1.1";
-      var showtimesUrl = baseUrl + '/movies/'+{{movie_id}}+'/showings';
+      var showtimesUrl = baseUrl + '/movies/'+ {{movie_id}} +'/showings';
       var zipCode = {{current}};
       var d = new Date();//{{request.session.date}};  //i need this to be in a session storing the data from the date field
       var today = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
