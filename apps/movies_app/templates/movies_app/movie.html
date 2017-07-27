@@ -3,14 +3,55 @@
   <head>
     <meta charset="utf-8">
     <title>movie</title>
+      <script src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+    <script>
+      var api_key = 'sctr38gfjp9kyyd29mk48kat';
+      var baseUrl = "http://data.tmsapi.com/v1.1";
+      var showtimesUrl = baseUrl + '/movies/showings';
+      var zipCode = {{current}};
+      var d = new Date();//{{request.session.date}};  //i need this to be in a session storing the data from the date field
+      var today = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+      $(document).ready(function(){
+        $.ajax({
+          url: showtimesUrl,
+            data: { startDate: today,
+              zip: zipCode,
+              jsonp: "dataHandler",
+              api_key: api_key
+              },
+            dataType: "jsonp",
+          });
+        });
+        function dataHandler(data) {
+          console.log('<p>Found ' + data.length + ' movies showing within 5 miles of ' + zipCode+':</p>')
+          $.each(data, function(index, movie) {
+            console.log(movie.title);
+            console.log(movie.rootId);
+            console.log(movie.showtimes[0].theatre.name);
+            for (var i = 0; i < movie.showtimes.length; i++) {
+            $('.poster').html('<p>'+ movie.title + '</p>');
+              $('.showtimes').append('<button id="add" type="button" name={{movie_id}}>'+ movie.showtimes[i].dateTime +'</button>');
+            }
+          })
+        }
+    </script>
+    <script>
+    $(document).ready(function(){
+        $('#add').submit(function(e){
+            e.preventDefault()
+        })
+      })
+    </script>
   </head>
   <body>
-    <p>{{movie_id}}</p>
-    <img src="" alt="poster">
-    <button type="button" name="button">going</button>
-    <h1>dates</h1>
-    <button type="button" name="button">show times</button>
-    <p>(counter)</p>
+    <!-- <p>{{movie_id}}</p> -->
+    <div class="poster">
+
+    </div>
+    <h1>{{request.session.date}}</h1>
+    <div class="showtimes">
+
+    </div>
     <h2>comments</h2>
     <p>comment</p>
     <form class="" action="index.html" method="post">
