@@ -32,7 +32,7 @@
           });
         });
         function dataHandler(data) {
-          $('.poster').append(
+          $('.poster').text('').append(
             $(document.createElement('img')).attr(
               'src', base_img_url + data[0].preferredImage.uri + '?api_key='+api_key
             )

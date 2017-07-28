@@ -2,7 +2,7 @@
   margin:0;
   padding:0;
   border:0;
-
+  box-sizing: border-box;
 }
 
 div.login{
@@ -35,9 +35,9 @@ padding-top: 20px;
 }
 
 .poster{
-  margin-left: 520px;
   margin-top: 80px;
-
+  display: flex;
+  justify-content: center;
 }
 
 #time{
@@ -56,7 +56,7 @@ h2.subhead{
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-   
+
 }
 
 
@@ -116,6 +116,10 @@ p {
 
 img{
   align-content: center;
+  box-sizing: border-box;
+  display: inline-block;
+  width: 240px;
+  height: 360px;
 }
 
 .button{
