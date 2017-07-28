@@ -8,10 +8,10 @@
         <script src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
         <script>
           var api_key = 'sszbbjhadk82fc9nh469bs2k';
-          var base_img_url = "http://developer.tmsimg.com/"; 
+          var base_img_url = "http://developer.tmsimg.com/";
           var baseUrl = "http://data.tmsapi.com/v1.1";
           var showtimesUrl = baseUrl + '/movies/showings';
-          var zipCode = "95128";  //should be the zip of currently lgged in user
+          var zipCode = {{current}};  //should be the zip of currently lgged in user
           var d = new Date();  //i need this to be in a session storing the data from the date field
           var today = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
           $(document).ready(function(){
@@ -29,9 +29,9 @@
               console.log('<p>Found ' + data.length + ' movies showing within 5 miles of ' + zipCode+':</p>')
               $.each(data, function(index, movie) {
                 console.log(movie.title);
-                console.log(movie.rootId);
+                console.log(movie.preferredImage.uri);
                 console.log(movie.showtimes[0].theatre.name);
-                $('.pop').append('<a href ="/movies/'+ movie.rootId + '"><img src ="' + base_img_url + movie.preferredImage.uri + '?api_key=' + api_key + '" alt="{% static "movies_app/poster.jpg" %}"></a><p>' + movie.showtimes[0].theatre.name + '</p>');
+                $('.other').prepend('<a href ="/movies/'+ movie.rootId + '"><img src = "' + base_img_url + movie.preferredImage.uri +'?api_key='+api_key+'"></a>' + '<p>'+ movie.title + '</p>' + '<p>' + movie.showtimes[0].theatre.name + '</p>' + '<button type="button" name="button"><a href="/movies/'+movie.rootId+'">select</a></button>');
                 //the button is going to link to a url with the movie.rootId
                 //MYRON LOOK AT THIS
               })
@@ -71,7 +71,7 @@
                 });
             })
         </script>
-    
+
 
 
     </head>
@@ -98,8 +98,24 @@
         <div id="movie">
           <h2>Movies Showing Near You</h2>
           <div class="pop">
+<<<<<<< HEAD
           </div>
           <input type="submit" value="Other Movies">
+=======
+            <button class="other" type="button" name="button">Other movies</button>
+          </div>
+          <div class="other_movies">
+          </div>
+        </div>
+        <div class="user">
+          <form class="ajax_form" action="/welcome/find_users" method="post">
+            {% csrf_token %}
+            Find Users by name: <input type="text" name="find_name" id="ajax_find_users">
+          </form>
+            <p>list of usernames that match that name</p>
+            <div class="found_users">
+            </div>
+>>>>>>> d9f7ffa857fce8e784c0744fc88dfe13f8bfbe02
         </div>
     </body>
 </html>

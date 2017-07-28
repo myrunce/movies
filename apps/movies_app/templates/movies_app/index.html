@@ -1,50 +1,82 @@
 <html lang="en">
     <head>
-        <title>Welcome to Movies</title>
-        <meta charset="UTF-8">
+
+        <meta charset="utf-8">
+
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Welcome to Movies</title>
+
+         <!-- Bootstrap Core CSS -->
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'movies_app/css/stylesheet.css' %}">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
         <script src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
         <script>
-          $(document).ready(function(){
-            $('.register').hide();
-            $('#show').click(function(){
-              $('.register').slideDown();
+            $(document).ready(function(){
+                $('.register').hide();
+                $('#show').click(function(){
+                $('.register').slideDown();
+                $('')
+                })
             })
-          })
-          </script>
-        <style>
-            div.login{
-                display: inline-block;
-                border: 3px solid black;
-                padding: 10px;
-            }
-            div.register{
-                display: inline-block;
-                border: 3px solid black;
-                vertical-align: top;
-                padding: 10px
-            }
-        </style>
+        </script>
     </head>
+    <style>
+
+        h1 {
+            text-align:center;
+            font-size: 575%;
+        /*  text-transform: uppercase;*/
+            letter-spacing: 1%;
+            margin:5% 0 0 0;
+            color: #bfa3a1;
+        }
+
+        #subheading{
+             color: #bfa3a1;
+        }
+        legend{
+            line-height: 40px;
+            border-bottom: 1px solid #8a3737;
+            color: #bfa3a1;
+        }
+
+        p{
+            padding: 5px;
+            margin-bottom: 0px;
+            text-align: left;
+        }
+
+    </style>
     <body>
-        <h1>Welcome to Movies!</h1>
-        {% for message in messages %}
+        <section class="paralax" id="coverpic">
+            <div class="paralax-inner"></div>
+            <h1>Film Friends</h1>
+            <h2 id = "subheading">Watch movies with friends!</h2>
+        </section>
+            {% for message in messages %}
             <div class="messages">
                 <p>{{ message }}</p>
             </div>
         {% endfor %}
+        <section class = 'login-reg'>
         <div class="login">
-            <h1>Login</h1>
+            <h3><legend>Login</legend></h3>
             <form action="/login" method="post">
                 {% csrf_token %}
                 Email:  <input type="input" name="email"><br><br>
                 Password:  <input type="password" name="password"><br><br>
-                <input type="submit" value="Login"><br><br>
+                <input class= "button" id = "login" type="submit" value="Login"><br><br>
             </form>
-            <button id="show" type="button" name="button">register</button>
+            <button id="show" class= "button" type="button" name="button">Register</button>
         </div>
         <div class="register">
-            <h1>Register</h1>
+            <h3><legend>Register</legend></h3>
             <form action="/process" method="post">
                 {% csrf_token %}
                 Name:  <input type="input" name="name"><br><br>
@@ -54,8 +86,9 @@
                 Confirm Password: <input type="password" name="confirm_password"><br><br>
                 Birthday: <input type="date" name="birth"><br><br>
                 Zip Code: <input type="input" name="zipCode"><br><br>
-                <input type="submit" value="Register">
+                <input type="submit" class="button" id= "register" value="Register">
             </form>
         </div>
+        </section>
     </body>
 </html>

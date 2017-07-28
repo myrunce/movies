@@ -4,6 +4,7 @@ from models import *
 from django.shortcuts import render, redirect, HttpResponse
 import bcrypt
 from django.contrib import messages
+import datetime
 
 # Create your views here.
 def login_reg(request):
@@ -43,7 +44,7 @@ def login(request):
         return redirect('/')
 
 def welcome(request):
-    return render(request, 'movies_app/welcome.html')
+    return render(request, 'movies_app/welcome.html', {'current': User.objects.get(id = request.session['user_id']).zipCode})
 
 # def watch(request):
 #     the_user = movie.objects.get(id = request.session.id)

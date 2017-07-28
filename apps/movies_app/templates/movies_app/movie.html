@@ -7,6 +7,7 @@
     <script>
       var api_key = 'sszbbjhadk82fc9nh469bs2k';
       var baseUrl = "http://data.tmsapi.com/v1.1";
+      var base_img_url = "http://developer.tmsimg.com/";
       var showtimesUrl = baseUrl + '/movies/'+ {{movie_id}} +'/showings';
       var zipCode = {{current}};
       var d = new Date();//{{request.session.date}};  //i need this to be in a session storing the data from the date field
@@ -25,39 +26,36 @@
         function dataHandler(data) {
           console.log('<p>Found ' + data.length + ' movies showing within 5 miles of ' + zipCode+':</p>')
           $.each(data, function(index, movie) {
-            console.log(movie.title);
-            console.log(movie.rootId);
-            console.log(movie.showtimes[0].theatre.name);
             for (var i = 0; i < movie.showtimes.length; i++) {
-            $('.poster').html('<p>'+ movie.title + '</p>');
-              $('.showtimes').append('<button id="add" type="button" name={{movie_id}}>'+ movie.showtimes[i].dateTime +'</button>');
+            $('.poster').html('<img src = "' + base_img_url + movie.preferredImage.uri +'?api_key='+api_key+'">');
+            $('.desc').html('<p>'+movie.shortDescription+'</p>')
+            $('.rating').html('<h1>'+ movie.ratings[0].code +'</h1>')
+              $('.showtimes').append("<form class='shows' action='/' method='post'>{% csrf_token %}<input type='hidden' name='showtime' value="+movie.showtimes[0].dateTime+"><input type='hidden' name='movieid' value="+{{movie_id}}+"><input class="+i+" type='submit' name='submit' value="+ movie.showtimes[0].dateTime +"></form>");
+              $(document).on('click')
+              var count=0
+              $('.'+i).click(function() {
+                $('.showtimes').html('<p> Congradulations on picking '+movie.showtimes[0].dateTime.toString()+'! '+(count+=1)+' people are going with you. Tell your friends to find you and add themselves to this movie.</p>');
+              })
             }
           })
         }
     </script>
-    <script>
-    $(document).ready(function(){
-        $('#add').submit(function(e){
-            e.preventDefault()
-        })
-      })
-    </script>
   </head>
   <body>
+
+
     <!-- <p>{{movie_id}}</p> -->
     <div class="poster">
+    </div>
+    <div class="rating">
 
     </div>
-    <h1>{{request.session.date}}</h1>
+    <div class="desc">
+
+    </div>
     <div class="showtimes">
 
     </div>
-    <h2>comments</h2>
-    <p>comment</p>
-    <form class="" action="index.html" method="post">
-      {%csrf_token%}
-      <textarea name="name" rows="8" cols="80"></textarea>
-      <input type="submit" name="" value="comment">
-    </form>
+
   </body>
 </html>
