@@ -54,13 +54,19 @@ def find_users(request):
     return HttpResponse(users)
 
 def movie(request, movie_id):
-    context = {
-    'current': User.objects.get(id = request.session['user_id']).zipCode,
-    'movie_id': str(movie_id)
-    }
-    print context['current']
+    try:
+        context = {
+        'current': User.objects.get(id = request.session['user_id']).zipCode,
+        'movie_id': str(movie_id),
+        'count': showTime.objects.filter(time = request.POST['showtime']).count()
+        }
+    except:
+        context = {
+        'current': User.objects.get(id = request.session['user_id']).zipCode,
+        'movie_id': str(movie_id),
+        'count': "0"
+        }
     return render(request, 'movies_app/movie.html', context)
 def watch(request, movie_id):
-    showTime.objects.create(time = request.POST['showtime'], user = request.session['user_id'], movie = movie_id)
-    count = showTime.objects.filter(time = request.POST['showtime']).count()
-    return HttpResponse(count)
+    showTime.objects.create(time = str(request.POST['showtime']), user = User.objects.get(id=request.session['user_id']), moveieID = movie_id)
+    return redirect('/movies/'+movie_id)

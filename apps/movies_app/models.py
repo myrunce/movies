@@ -31,11 +31,7 @@ class User(models.Model):
     zipCode = models.IntegerField()
     objects = UserManager()
 
-class Movie(models.Model):
-    movie = models.CharField(max_length=255)
-    moveieID = models.IntegerField(default=0)
-
 class showTime(models.Model):
-    time = models.DateField()
+    time = models.CharField(max_length=255)
     user = models.ForeignKey(User, related_name= "User_showtimes")
-    movie = models.ForeignKey(Movie, related_name= "Movie_showtimes")
+    moveieID = models.IntegerField(default=0)
