@@ -69,4 +69,5 @@ def movie(request, movie_id):
     return render(request, 'movies_app/movie.html', context)
 def watch(request, movie_id):
     showTime.objects.create(time = str(request.POST['showtime']), user = User.objects.get(id=request.session['user_id']), moveieID = movie_id)
-    return redirect('/movies/'+movie_id)
+    url = request.POST['url']
+    return redirect(url)
