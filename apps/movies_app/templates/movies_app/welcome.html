@@ -26,8 +26,10 @@
               });
             });
             function dataHandler(data) {
-              console.log('<p>Found ' + data.length + ' movies showing within 5 miles of ' + zipCode+':</p>')
-              $.each(data, function(index, movie) {
+                var dataArr = data
+                dataArr.slice(0,6);
+                console.log('<p>Found ' + data.length + ' movies showing within 5 miles of ' + zipCode+':</p>')
+                $.each(dataArr, function(index, movie) {
                 console.log(movie.title);
                 console.log(movie.preferredImage.uri);
                 console.log(movie.showtimes[0].theatre.name);
@@ -98,10 +100,6 @@
         <div id="movie">
           <h2>Movies Showing Near You</h2>
           <div class="pop">
-<<<<<<< HEAD
-          </div>
-          <input type="submit" value="Other Movies">
-=======
             <button class="other" type="button" name="button">Other movies</button>
           </div>
           <div class="other_movies">
@@ -115,7 +113,6 @@
             <p>list of usernames that match that name</p>
             <div class="found_users">
             </div>
->>>>>>> d9f7ffa857fce8e784c0744fc88dfe13f8bfbe02
         </div>
     </body>
 </html>
