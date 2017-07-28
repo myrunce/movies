@@ -35,3 +35,7 @@ class showTime(models.Model):
     time = models.CharField(max_length=255)
     user = models.ForeignKey(User, related_name= "User_showtimes")
     moveieID = models.IntegerField(default=0)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 897e12a1bb744ff52a6ad12ba9b3e1b6fcb13e17
