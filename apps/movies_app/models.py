@@ -33,7 +33,6 @@ class User(models.Model):
 
 class Movie(models.Model):
     movie = models.CharField(max_length=255)
-    users = models.ManyToManyField(User, related_name = 'movies')
     moveieID = models.IntegerField(default=0)
 
 class showTime(models.Model):
