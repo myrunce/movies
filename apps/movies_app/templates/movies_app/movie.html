@@ -30,10 +30,10 @@
             $('.poster').html('<img src = "' + base_img_url + movie.preferredImage.uri +'?api_key='+api_key+'">');
             $('.desc').html('<p>'+movie.shortDescription+'</p>')
             $('.rating').html('<h1>'+ movie.ratings[0].code +'</h1>')
-              $('.showtimes').append("<form class='shows' action='/movies/"+{{movie_id}}+"' method='post'>{% csrf_token %}<input type='hidden' name='showtime' value="+movie.showtimes[0].dateTime+"><input type='hidden' name='movieid' value="+{{movie_id}}+"><input class="+i+" type='submit' name='submit' value="+ movie.showtimes[0].dateTime +"></form>");
+              $('.showtimes').append("<form class='shows' action='/watch/"+{{movie_id}}+"' method='post'>{% csrf_token %}<input type='hidden' name='showtime' value="+movie.showtimes[0].dateTime+"><input type='hidden' name='movieid' value="+{{movie_id}}+"><input class="+i+" type='submit' name='submit' value="+ movie.showtimes[0].dateTime +"></form>");
               $(document).on('click')
-              $('.'+i).click(function(serverResponse) {
-                $('.showtimes').html('<p> Congradulations on picking '+movie.showtimes[0].dateTime.toString()+'! '+(count)+' people are going with you. Tell your friends to find you and add themselves to this movie.</p>');
+              $('.'+i).click(function() {
+                $('.showtimes').html('<p> Congradulations on picking '+movie.showtimes[0].dateTime.toString()+'! people are going with you. Tell your friends to find you and add themselves to this movie.</p>');
               })
             }
           })
