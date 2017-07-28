@@ -6,7 +6,7 @@ urlpatterns = [
     url(r'^$', views.login_reg),
     url(r'^process$', views.process),
     url(r'^login$', views.login),
-    url(r'^movies/?$', views.welcome),
+    url(r'^welcome/?$', views.welcome),
     url(r'^welcome/find_users$', views.find_users),
     url(r'^movies/(?P<movie_id>\d+)$', views.movie),
     url(r'^watch/(?P<movie_id>\d+)$', views.watch),
