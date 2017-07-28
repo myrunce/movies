@@ -56,7 +56,7 @@ def find_users(request):
     if users.count() < 2:
         users = User.objects.get(name__startswith = request.POST['find_name'])
     print users
-    return HttpResponse(users.name)
+    return HttpResponse(users)
 
 def movie(request, movie_id):
     context = {
