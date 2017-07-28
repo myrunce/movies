@@ -46,11 +46,6 @@ def login(request):
 def welcome(request):
     return render(request, 'movies_app/welcome.html', {'current': User.objects.get(id = request.session['user_id']).zipCode})
 
-# def watch(request):
-#     the_user = movie.objects.get(id = request.session.id)
-#     user_watching = Movie.objects.create(movie = name of movie, users = the_user)
-#     return redirect('/')
-
 def find_users(request):
     users = User.objects.filter(name__startswith = request.POST['find_name'])
     if users.count() < 2:
@@ -65,3 +60,7 @@ def movie(request, movie_id):
     }
     print context['current']
     return render(request, 'movies_app/movie.html', context)
+def watch(request, movie_id):
+    showTime.objects.create(time = request.POST['showtime'], user = request.session['user_id'], movie = movie_id)
+    count = showTime.objects.filter(time = request.POST['showtime']).count()
+    return HttpResponse(count)

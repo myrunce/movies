@@ -4,6 +4,7 @@
         <title>Welcome to Movies</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load static %}
         <script src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
         <script>
           var api_key = 'sszbbjhadk82fc9nh469bs2k';
@@ -16,17 +17,19 @@
           $(document).ready(function(){
             $.ajax({
               url: showtimesUrl,
-                data: { startDate: today,
+                data: {startDate: today,
                   zip: zipCode,
                   jsonp: "dataHandler",
-                  api_key: api_key
+                  api_key: api_key,
                   },
                 dataType: "jsonp",
               });
             });
             function dataHandler(data) {
-              console.log('<p>Found ' + data.length + ' movies showing within 5 miles of ' + zipCode+':</p>')
-              $.each(data, function(index, movie) {
+                var dataArr = data
+                dataArr.slice(0,6);
+                console.log('<p>Found ' + data.length + ' movies showing within 5 miles of ' + zipCode+':</p>')
+                $.each(dataArr, function(index, movie) {
                 console.log(movie.title);
                 console.log(movie.preferredImage.uri);
                 console.log(movie.showtimes[0].theatre.name);
@@ -78,6 +81,15 @@
         <h1>welcome {{ request.session.user_name }}</h1>
         <div class="date">
           <button class="movies_date" type="button" name="button">date</button>
+        </div>
+        <div class="user">
+          <form class="ajax_form" action="/welcome/find_users" method="post">
+            {% csrf_token %}
+            Find Users by name: <input type="text" name="find_name" id="ajax_find_users">
+          </form>
+            <p>list of usernames that match that name</p>
+            <div class="found_users">
+        </div>
           <!-- <p id=dates>moives on that day (number of people goind)</p> -->
           <form class="" action="index.html" method="post">
             {% csrf_token %}
@@ -85,8 +97,8 @@
             <input class=dates type="submit" name="" value="">
           </form>
         </div>
-        <div class="movie">
-          <h2>Select a movie</h2>
+        <div id="movie">
+          <h2>Movies Showing Near You</h2>
           <div class="pop">
             <button class="other" type="button" name="button">Other movies</button>
           </div>
