@@ -32,21 +32,67 @@
           });
         });
         function dataHandler(data) {
-          console.log('<p>Found ' + data.length + ' movies showing within 5 miles of ' + zipCode+':</p>')
-          $.each(data, function(index, movie) {
+          $('.poster').text('').append(
+            $(document.createElement('img')).attr(
+              'src', base_img_url + data[0].preferredImage.uri + '?api_key='+api_key
+            )
+          )
+          $('.desc').append(
+            $(document.createElement('p')).text(
+              data[0].shortDescription
+            )
+          )
+          $('.rating').append(
+            $(document.createElement('h1')).text(
+              data[0].ratings[0].code
+            )
+          );
+          let showtime = $('.showtimes');
+          $.each(data, function(index, movie){
             for (var i = 0; i < movie.showtimes.length; i++) {
-            $('.poster').html('<img src = "' + base_img_url + movie.preferredImage.uri +'?api_key='+api_key+'">');
-            $('.desc').html('<p>'+movie.shortDescription+'</p>')
-            $('.rating').html('<h1>'+ movie.ratings[0].code +'</h1>')
-              $('.showtimes').append("<form class='shows' action='/watch/"+{{movie_id}}+"' method='post'>{% csrf_token %}<input type='hidden' name='url' value="+movie.officialUrl+"><input type='hidden' name='showtime' value="+movie.showtimes[0].dateTime+"><input type='hidden' name='movieid' value="+{{movie_id}}+"><input class="+i+" type='submit' name='submit' value="+ movie.showtimes[0].dateTime +"></form>");
-              $(document).on('click')
-              $('.'+i).submit(function() {
-                $('.showtimes').html('<p> Congradulations on picking '+movie.showtimes[0].dateTime.toString()+'! '+{{count}}+' people are going with you. Tell your friends to find you and add themselves to this movie.</p>');
-                $(document).on('click')
-              })
+
+              let showing = $(document.createElement('p'));
+              showing.attr('class', 'showing')
+              showing.attr('x-showtime', movie.showtimes[i].dateTime);
+              showing.attr('x-movieid', {{movie_id}});
+              showing.text(movie.showtimes[i].dateTime);
+
+              $('.showtimes').append(showing)
             }
           })
         }
+
+        $(document).on('click', '.showing', function(e){
+          e.preventDefault();
+          let me = $(this);
+          let movieid = me.attr('x-movieid');
+          let showtime = me.attr('x-showtime');
+          let csrftoken = $('#csrfcontainer input').attr('value')
+
+          $.post(
+            '/watch/' + movieid,
+            {
+              showtime:showtime,
+              csrfmiddlewaretoken:csrftoken,
+            },
+            function(response){
+              let congrats = 'Congratulations on picking ' +
+                  response.showtime + '! '
+              if (response.watcher_count === 1) {
+                congrats += " You are going alone.  It's dangerous to go alone invite a friend!"
+              } else {
+                congrats += response.watcher_count + ' people are going with you.' + ' tell more friends to find this movie!';
+              }
+
+              $('.showtimes').empty().append(
+                $(document.createElement('p')).text(
+                  congrats
+                )
+              );
+              console.log(response)
+            }
+          )
+        })
   </script>
 <style>
     h1,h2 {
@@ -63,7 +109,7 @@
       color: white;
       font-size: 20px;
     }
-  
+
 
     input[type="submit"]{
       margin: 20px;
@@ -97,6 +143,9 @@
     </div>
     <div class="showtimes" id= "time">
 
+    </div>
+    <div id="csrfcontainer">
+      {%csrf_token%}
     </div>
   </div>
   </body>

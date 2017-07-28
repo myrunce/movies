@@ -33,5 +33,5 @@ class User(models.Model):
 
 class showTime(models.Model):
     time = models.CharField(max_length=255)
-    user = models.ForeignKey(User, related_name= "User_showtimes")
-    moveieID = models.IntegerField(default=0)
+    movieID = models.IntegerField(default=0)
+    user = models.ManyToManyField(User, related_name= "user_showtimes")

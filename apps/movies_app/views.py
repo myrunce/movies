@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from models import *
 from django.shortcuts import render, redirect, HttpResponse
+from django.http import JsonResponse
 import bcrypt
 from django.contrib import messages
 import datetime
@@ -54,20 +55,28 @@ def find_users(request):
     return HttpResponse(users)
 
 def movie(request, movie_id):
-    try:
-        context = {
-        'current': User.objects.get(id = request.session['user_id']).zipCode,
-        'movie_id': str(movie_id),
-        'count': showTime.objects.filter(time = request.POST['showtime']).count()
-        }
-    except:
-        context = {
-        'current': User.objects.get(id = request.session['user_id']).zipCode,
-        'movie_id': str(movie_id),
-        'count': "0"
-        }
+    context = {
+    'current': User.objects.get(id = request.session['user_id']).zipCode,
+    'movie_id': str(movie_id),
+    }
+
     return render(request, 'movies_app/movie.html', context)
+
 def watch(request, movie_id):
-    showTime.objects.create(time = str(request.POST['showtime']), user = User.objects.get(id=request.session['user_id']), moveieID = movie_id)
-    url = request.POST['url']
-    return redirect(url)
+    try:
+        showing = showTime.objects.get(
+            time = str(request.POST['showtime']),
+            movieID = movie_id,
+        )
+    except:
+        showing = showTime.objects.create(
+            time = str(request.POST['showtime']),
+            movieID = movie_id
+        )
+    showing.user.add(User.objects.get(id=request.session['user_id']))
+    out = {
+        'showtime': showing.time,
+        'movieID': showing.movieID,
+        'watcher_count': showing.user.count(),
+    }
+    return JsonResponse(out)
