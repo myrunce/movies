@@ -28,6 +28,8 @@
           $.each(data, function(index, movie) {
             for (var i = 0; i < movie.showtimes.length; i++) {
             $('.poster').html('<img src = "' + base_img_url + movie.preferredImage.uri +'?api_key='+api_key+'">');
+            $('.desc').html('<p>'+movie.shortDescription+'</p>')
+            $('.rating').html('<h1>'+ movie.ratings[0].code +'</h1>')
               $('.showtimes').append("<form class='shows' action='/' method='post'>{% csrf_token %}<input type='hidden' name='showtime' value="+movie.showtimes[0].dateTime+"><input type='hidden' name='movieid' value="+{{movie_id}}+"><input class="+i+" type='submit' name='submit' value="+ movie.showtimes[0].dateTime +"></form>");
               $(document).on('click')
               var count=0
@@ -45,7 +47,12 @@
     <!-- <p>{{movie_id}}</p> -->
     <div class="poster">
     </div>
-    <h1>{{request.session.date}}</h1>
+    <div class="rating">
+
+    </div>
+    <div class="desc">
+
+    </div>
     <div class="showtimes">
 
     </div>
