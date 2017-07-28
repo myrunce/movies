@@ -29,13 +29,10 @@ class User(models.Model):
     password = models.CharField(max_length=255)
     birthday = models.DateField()
     zipCode = models.IntegerField()
-    objects = UserManager() 
-
-class Movie(models.Model):
-    movie = models.CharField(max_length=255)
-    moveieID = models.IntegerField(default=0)
+    objects = UserManager()
 
 class showTime(models.Model):
     time = models.DateField()
     user = models.ForeignKey(User, related_name= "User_showtimes")
-    movie = models.ForeignKey(Movie, related_name= "Movie_showtimes")
+    moveieID = models.IntegerField(default=0)
+

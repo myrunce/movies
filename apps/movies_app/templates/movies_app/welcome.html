@@ -33,12 +33,24 @@
                         console.log(movie.title);
                         console.log(movie.preferredImage.uri);
                         console.log(movie.showtimes[0].theatre.name);
-                        $('.pop').prepend('<div class="a_movie"><a href ="/movies/'+ movie.rootId + '"><img class = "movie_img" src = "' + base_img_url + movie.preferredImage.uri +'?api_key='+api_key+'"></a>' + '<p>' + movie.showtimes[0].theatre.name + '</p>');
+                        $('.pop').prepend('<div class="a_movie"><a href ="/movies/'+ movie.rootId + '"><img class= "movie_img" src = "' + base_img_url + movie.preferredImage.uri +'?api_key='+api_key+'"></a>' + '<p>' + movie.showtimes[0].theatre.name + '</p>');
+                        $(".movie_img").css("opacity", 0.5);
+                        $(".movie_img").hover(function() {
+                          $(this).animate({opacity: 1.0}, 500);
+                          }, function() {
+                            $(this).animate({opacity: 0.5}, 500);
+                          });
                 //the button is going to link to a url with the movie.rootId
                 //MYRON LOOK AT THIS
               })
             }
-        </script>
+             $(".a_movie").css("opacity", 0.5);
+             $(".a_movie").hover(function() {
+               $(this).animate({opacity: 1.0}, 500);
+             }, function() {
+                 $(this).animate({opacity: 0.5}, 500);
+            });
+          </script>
     </head>
     <body>
         <div id="movie">

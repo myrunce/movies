@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^welcome$', views.welcome),
     url(r'^welcome/find_users$', views.find_users),
     url(r'^movies/(?P<movie_id>\d+)$', views.movie),
+    url(r'^watch/(?P<movie_id>\d+)$', views.watch),
 ]
