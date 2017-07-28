@@ -31,6 +31,8 @@ class User(models.Model):
     zipCode = models.IntegerField()
     objects = UserManager()
 
-class Movie(models.Model):
-    movie = models.CharField(max_length=255)
-    users = models.ManyToManyField(User, related_name = 'movies')
+class showTime(models.Model):
+    time = models.DateField()
+    user = models.ForeignKey(User, related_name= "User_showtimes")
+    moveieID = models.IntegerField(default=0)
+

@@ -4,6 +4,7 @@
         <title>Welcome to Movies</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load static %}
         <script src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
         <script>
           var api_key = 'sszbbjhadk82fc9nh469bs2k';
@@ -16,91 +17,46 @@
           $(document).ready(function(){
             $.ajax({
               url: showtimesUrl,
-                data: { startDate: today,
+                data: {startDate: today,
                   zip: zipCode,
                   jsonp: "dataHandler",
-                  api_key: api_key
+                  api_key: api_key,
                   },
                 dataType: "jsonp",
               });
             });
             function dataHandler(data) {
-              console.log('<p>Found ' + data.length + ' movies showing within 5 miles of ' + zipCode+':</p>')
-              $.each(data, function(index, movie) {
-                console.log(movie.title);
-                console.log(movie.preferredImage.uri);
-                console.log(movie.showtimes[0].theatre.name);
-                $('.other').prepend('<a href ="/movies/'+ movie.rootId + '"><img src = "' + base_img_url + movie.preferredImage.uri +'?api_key='+api_key+'"></a>' + '<p>'+ movie.title + '</p>' + '<p>' + movie.showtimes[0].theatre.name + '</p>' + '<button type="button" name="button"><a href="/movies/'+movie.rootId+'">select</a></button>');
+                var dataArr = data;
+                dataArr.length = 10
+                console.log(dataArr);
+                    $.each(dataArr, function(index, movie) {
+                        console.log(movie.title);
+                        console.log(movie.preferredImage.uri);
+                        console.log(movie.showtimes[0].theatre.name);
+                        $('.pop').prepend('<div class="a_movie"><a href ="/movies/'+ movie.rootId + '"><img class= "movie_img" src = "' + base_img_url + movie.preferredImage.uri +'?api_key='+api_key+'"></a>' + '<p>' + movie.showtimes[0].theatre.name + '</p>');
+                        $(".movie_img").css("opacity", 0.5);
+                        $(".movie_img").hover(function() {
+                          $(this).animate({opacity: 1.0}, 500);
+                          }, function() {
+                            $(this).animate({opacity: 0.5}, 500);
+                          });
                 //the button is going to link to a url with the movie.rootId
                 //MYRON LOOK AT THIS
               })
             }
-        </script>
-
-        <script>
-            $(document).ready(function(){
-              $('.pop').append('');
-              $('.other_movies').hide();
-              $('button.other').click(function(){
-                $('.other_movies').show();
-              })
-              $('.dates').hide();
-              $('button.movies_date').click(function(){
-                  $('.dates').show();
-              })
-            })
-        </script>
-
-        <script>
-            $(document).ready(function(){
-                $('.ajax_form').submit(function(e){
-                    e.preventDefault()
-                })
-                $('#ajax_find_users').keyup(function(){
-                    console.log('Sending Ajax request to /welcome/find_users')
-                    console.log('Submitting the following data', $(this).parent().serialize())
-                    $.ajax({
-                        url: '/welcome/find_users', /* Where should this go? */
-                        method: 'post', /* Which HTTP verb? */
-                        data: $(this).parent().serialize(), /* Any data to send along? */
-                        success: function(serverResponse) { /* What code should we run when the server responds? */
-                        $('.found_users').html(serverResponse)
-                        }
-                    })
-                });
-            })
-        </script>
-
-
-
+             $(".a_movie").css("opacity", 0.5);
+             $(".a_movie").hover(function() {
+               $(this).animate({opacity: 1.0}, 500);
+             }, function() {
+                 $(this).animate({opacity: 0.5}, 500);
+            });
+          </script>
     </head>
     <body>
-        <h1>welcome {{ request.session.user_name }}</h1>
-        <div class="date">
-          <button class="movies_date" type="button" name="button">date</button>
-          <!-- <p id=dates>moives on that day (number of people goind)</p> -->
-          <form class="" action="index.html" method="post">
-            {% csrf_token %}
-            <input class=dates type="date" name="date" value="">
-            <input class=dates type="submit" name="" value="">
-          </form>
-        </div>
-        <div class="movie">
-          <h2>Select a movie</h2>
+        <div id="movie">
+          <h2>Movies Showing Near You</h2>
           <div class="pop">
-            <button class="other" type="button" name="button">Other movies</button>
           </div>
-          <div class="other_movies">
-          </div>
-        </div>
-        <div class="user">
-          <form class="ajax_form" action="/welcome/find_users" method="post">
-            {% csrf_token %}
-            Find Users by name: <input type="text" name="find_name" id="ajax_find_users">
-          </form>
-            <p>list of usernames that match that name</p>
-            <div class="found_users">
-            </div>
         </div>
     </body>
 </html>
