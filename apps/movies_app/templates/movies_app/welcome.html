@@ -4,6 +4,7 @@
         <title>Welcome to Movies</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load static %}
         <script src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
         <script>
           var api_key = 'sszbbjhadk82fc9nh469bs2k';
@@ -16,10 +17,10 @@
           $(document).ready(function(){
             $.ajax({
               url: showtimesUrl,
-                data: { startDate: today,
+                data: {startDate: today,
                   zip: zipCode,
                   jsonp: "dataHandler",
-                  api_key: api_key
+                  api_key: api_key,
                   },
                 dataType: "jsonp",
               });
@@ -30,7 +31,7 @@
                 console.log(movie.title);
                 console.log(movie.rootId);
                 console.log(movie.showtimes[0].theatre.name);
-                $('.pop').append('<a href ="/movies/'+ movie.rootId + '"><img src = ' + base_img_url + movie.preferredImage.uri + '></a>' + '<p>'+ movie.title + '</p>' + '<p>' + movie.showtimes[0].theatre.name + '</p>' + '<button type="button" name="button"><a href="/movies/'+movie.rootId+'">select</a></button>');
+                $('.pop').append('<a href ="/movies/'+ movie.rootId + '"><img src ="' + base_img_url + movie.preferredImage.uri + '?api_key=' + api_key + '" alt="{% static "movies_app/poster.jpg" %}"></a><p>' + movie.showtimes[0].theatre.name + '</p>');
                 //the button is going to link to a url with the movie.rootId
                 //MYRON LOOK AT THIS
               })
@@ -78,23 +79,6 @@
         <h1>welcome {{ request.session.user_name }}</h1>
         <div class="date">
           <button class="movies_date" type="button" name="button">date</button>
-          <!-- <p id=dates>moives on that day (number of people goind)</p> -->
-          <form class="" action="index.html" method="post">
-            {% csrf_token %}
-            <input class=dates type="date" name="date" value="">
-            <input class=dates type="submit" name="" value="">
-          </form>
-        </div>
-        <div class="movie">
-          <h2>Select a movie</h2>
-          <div class="pop">
-            <img src="" alt="poster goes here">
-            <button class="other" type="button" name="button">Other movies</button>
-          </div>
-          <div class="other_movies">
-            <img src="" alt="poster goes here">
-            <button type="button" name="button"><a href="#">select</a></button>
-          </div>
         </div>
         <div class="user">
           <form class="ajax_form" action="/welcome/find_users" method="post">
@@ -103,7 +87,19 @@
           </form>
             <p>list of usernames that match that name</p>
             <div class="found_users">
-            </div>
+        </div>
+          <!-- <p id=dates>moives on that day (number of people goind)</p> -->
+          <form class="" action="index.html" method="post">
+            {% csrf_token %}
+            <input class=dates type="date" name="date" value="">
+            <input class=dates type="submit" name="" value="">
+          </form>
+        </div>
+        <div id="movie">
+          <h2>Movies Showing Near You</h2>
+          <div class="pop">
+          </div>
+          <input type="submit" value="Other Movies">
         </div>
     </body>
 </html>
