@@ -29,7 +29,7 @@ class User(models.Model):
     password = models.CharField(max_length=255)
     birthday = models.DateField()
     zipCode = models.IntegerField()
-    objects = UserManager() 
+    objects = UserManager()
 
 class Movie(models.Model):
     movie = models.CharField(max_length=255)
