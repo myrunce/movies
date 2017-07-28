@@ -4,7 +4,14 @@
         <title>Welcome to Movies</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+          <!-- Bootstrap Core CSS -->
         {% load static %}
+        <link rel="stylesheet" href="{% static 'movies_app/css/stylesheet.css' %}">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
         <script src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
         <script>
           var api_key = 'sszbbjhadk82fc9nh469bs2k';
@@ -27,7 +34,7 @@
             });
             function dataHandler(data) {
                 var dataArr = data;
-                dataArr.length = 10
+                dataArr.length = 12
                 console.log(dataArr);
                     $.each(dataArr, function(index, movie) {
                         console.log(movie.title);
@@ -52,9 +59,49 @@
             });
           </script>
     </head>
+    <style>
+      p{
+        padding: 5px;
+        margin: 5px;
+        width: 300px;
+      text-align: center;
+      color: white;
+
+      }
+      h1 {
+            text-align:center;
+            font-size: 300%;
+        /*  text-transform: uppercase;*/
+            letter-spacing: 1%;
+            margin:5% 0 0 0;
+            color: #bfa3a1;
+        }
+
+
+      .a_movie{
+        display: inline-block;
+        text-align: center;
+      
+      }
+
+      .pop{
+        padding-left: 150px;
+      }
+      #movie{
+        background:url("/static/movies_app/images/selection.png")no-repeat center center fixed;
+        background-size: 100%;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        padding: 10px;
+        padding-left: 20px;
+      }
+    </style>
     <body>
         <div id="movie">
-          <h2>Movies Showing Near You</h2>
+          <h1>Movies Showing Near You</h1>
+          <hr>
           <div class="pop">
           </div>
         </div>
