@@ -4,6 +4,14 @@
     <meta charset="utf-8">
     <title>movie</title>
       <script src= 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+      <!-- Bootstrap Core CSS -->
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'movies_app/css/stylesheet.css' %}">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
     <script>
       var api_key = 'sszbbjhadk82fc9nh469bs2k';
       var baseUrl = "http://data.tmsapi.com/v1.1";
@@ -39,11 +47,38 @@
             }
           })
         }
-    </script>
+  </script>
+<style>
+    h1{
+      color: white;
+      font-size: 24px;
+     font-family: "Times New Roman", Times, serif;
+    }
+
+    h2{
+      font-family: "Times New Roman", Times, serif;
+    }
+
+    p{
+      text-align: center;
+      color: white;
+      font-size: 20px;
+    }
+  
+
+    input[type="submit"]{
+      padding: 5px 10px;
+      display: inline;
+      color: blue;
+    }
+  </style>
   </head>
   <body>
 
 
+<div class="wrapper" id= 'selection'>
+    <h2 class="subhead">Your Selection</h2>
+    <hr>
     <!-- <p>{{movie_id}}</p> -->
     <div class="poster">
     </div>
@@ -53,9 +88,9 @@
     <div class="desc">
 
     </div>
-    <div class="showtimes">
+    <div class="showtimes" id= "time">
 
     </div>
-
+  </div>
   </body>
 </html>

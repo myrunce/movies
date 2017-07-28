@@ -5,8 +5,6 @@
 
 }
 
-
-
 div.login{
 display: inline-block;
 border: 3px solid black;
@@ -28,6 +26,44 @@ font-family: inherit;
 border-radius: 10px;
 }
 
+.wrapper{
+  background-color: #dedede;
+}
+
+.wrapper h2{
+padding-top: 20px;
+}
+
+.poster{
+  margin-left: 520px;
+  margin-top: 80px;
+
+}
+
+#time{
+  padding: 5px 10px;
+  display: inline;
+}
+
+h2.subhead{
+  margin: 0px;
+}
+.wrapper{
+
+ background:url("/static/movies_app/images/selection.png")no-repeat center center fixed;
+  background-size: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+   
+}
+
+.subhead{
+  color: white;
+  font-size: 
+}
+
 h1 {
   text-align:center;
   font-size: 200%;
@@ -42,6 +78,7 @@ h2 {
   text-align:center;
   font-size: 175%;
   color: black;
+
 
 }
 h3{
@@ -73,16 +110,16 @@ h3{
   background-size: cover;
 }
 
-img{
-  opacity: 0.5
-}
-
 p {
   font-family: 'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
   text-align: right;
   padding-top:50px;
   padding-right:50px;
 
+}
+
+img{
+  align-content: center;
 }
 
 .button{
